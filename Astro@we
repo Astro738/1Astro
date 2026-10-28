@@ -1,0 +1,119 @@
+-- ==========================================
+-- ASTRO 2027 - SECURE LOADER (GUI STAGE)
+-- ==========================================
+
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local SoundService = game:GetService("SoundService")
+local LocalPlayer = Players.LocalPlayer
+
+pcall(function()
+    if CoreGui:FindFirstChild("AstroLoaderGui") then CoreGui.AstroLoaderGui:Destroy() end
+    if CoreGui:FindFirstChild("AstroUltimateGui") then CoreGui.AstroUltimateGui:Destroy() end
+end)
+
+local function playSound()
+    pcall(function()
+        local sd = Instance.new("Sound")
+        sd.SoundId = "rbxassetid://6042457221"
+        sd.Volume = 0.4
+        sd.Parent = SoundService
+        sd:Play()
+        game:GetService("Debris"):AddItem(sd, 1)
+    end)
+end
+
+playSound()
+
+local loaderGui = Instance.new("ScreenGui")
+loaderGui.Name = "AstroLoaderGui"
+loaderGui.Parent = CoreGui
+loaderGui.IgnoreGuiInset = true
+loaderGui.ResetOnSpawn = false
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 380, 0, 240)
+mainFrame.Position = UDim2.new(0.5, -190, 0.5, -120)
+mainFrame.BackgroundColor3 = Color3.fromRGB(15, 8, 10)
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = loaderGui
+
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 14)
+mainCorner.Parent = mainFrame
+
+local mainStroke = Instance.new("UIStroke")
+mainStroke.Color = Color3.fromRGB(220, 20, 60)
+mainStroke.Thickness = 2.5
+mainStroke.Parent = mainFrame
+
+local avatarImg = Instance.new("ImageLabel")
+avatarImg.Size = UDim2.new(0, 60, 0, 60)
+avatarImg.Position = UDim2.new(0.5, -30, 0, 25)
+avatarImg.BackgroundColor3 = Color3.fromRGB(30, 10, 15)
+pcall(function()
+    avatarImg.Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayer.UserId .. "&width=420&height=420&format=png"
+end)
+avatarImg.Parent = mainFrame
+
+local avatarCorner = Instance.new("UICorner")
+avatarCorner.CornerRadius = UDim.new(1, 0)
+avatarCorner.Parent = avatarImg
+
+local avatarStroke = Instance.new("UIStroke")
+avatarStroke.Color = Color3.fromRGB(220, 20, 60)
+avatarStroke.Thickness = 1.5
+avatarStroke.Parent = avatarImg
+
+local titleLbl = Instance.new("TextLabel")
+titleLbl.Size = UDim2.new(1, 0, 0, 30)
+titleLbl.Position = UDim2.new(0, 0, 0, 95)
+titleLbl.BackgroundTransparency = 1
+titleLbl.Text = "ASTRO HOB MM2"
+titleLbl.TextColor3 = Color3.fromRGB(255, 60, 80)
+titleLbl.TextSize = 15
+titleLbl.Font = Enum.Font.GothamBold
+titleLbl.TextXAlignment = Enum.TextXAlignment.Center
+titleLbl.Parent = mainFrame
+
+local subLbl = Instance.new("TextLabel")
+subLbl.Size = UDim2.new(1, -40, 0, 20)
+subLbl.Position = UDim2.new(0, 20, 0, 125)
+subLbl.BackgroundTransparency = 1
+subLbl.Text = "Welcome, " .. LocalPlayer.Name .. "!"
+subLbl.TextColor3 = Color3.fromRGB(200, 150, 160)
+subLbl.TextSize = 12
+subLbl.Font = Enum.Font.Gotham
+subLbl.TextXAlignment = Enum.TextXAlignment.Center
+subLbl.Parent = mainFrame
+
+local enterBtn = Instance.new("TextButton")
+enterBtn.Size = UDim2.new(0.85, 0, 0, 42)
+enterBtn.Position = UDim2.new(0.075, 0, 0, 165)
+enterBtn.BackgroundColor3 = Color3.fromRGB(220, 20, 60)
+enterBtn.Text = "أسترو 2027 (Launch Menu)"
+enterBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+enterBtn.TextSize = 13
+enterBtn.Font = Enum.Font.GothamBold
+enterBtn.Parent = mainFrame
+
+local btnCorner = Instance.new("UICorner")
+btnCorner.CornerRadius = UDim.new(0, 10)
+btnCorner.Parent = enterBtn
+
+local btnStroke = Instance.new("UIStroke")
+btnStroke.Color = Color3.fromRGB(255, 100, 120)
+btnStroke.Thickness = 1.5
+btnStroke.Parent = enterBtn
+
+enterBtn.MouseButton1Click:Connect(function()
+    playSound()
+    enterBtn.Text = "Loading Astro Menu..."
+    enterBtn.BackgroundColor3 = Color3.fromRGB(120, 10, 30)
+    
+    task.wait(0.3)
+    loaderGui:Destroy()
+    
+    -- تحميل السكريبت الأساسي من رابط قيت هاب الصحيح
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Astro738/Astro/refs/heads/main/Astro"))()
+end)
